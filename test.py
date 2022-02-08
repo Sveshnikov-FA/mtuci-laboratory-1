@@ -1,9 +1,11 @@
-h = 183
-w = 72
-s = 15250
-t = 55
+HEIGHT = 183
+WEIGHT = 72
+STEPS = 15250
+TIME = 55
 def L1Calc(h,w,s,t):
 	return 0.035 * w + ((s/t)**2 / h) * 0.029 * w
 
-print(L1Calc(h,w,s,t))
-# 879.710082644628
+print(f"Калорий сожжено: {L1Calc(HEIGHT,WEIGHT,STEPS,TIME)}\nПройденная дистанция: {STEPS/TIME}")
+
+# Калорий сожжено: 879.71
+# Пройденная дистанция: 277.27
