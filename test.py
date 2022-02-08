@@ -11,7 +11,7 @@ def CaloriesCalc(h,w,s,t):
 def DistanceCalc(h,s):
 	return (((h/4 + 0.37) * s)/100)/1000
 
-#print(f"Калорий сожжено: {CaloriesCalc(HEIGHT,WEIGHT,STEPS,TIME)}")
+print(f"Калорий сожжено: {CaloriesCalc(HEIGHT,WEIGHT,STEPS,TIME)}")
 
 # Калорий сожжено: 879.71
 
@@ -21,4 +21,5 @@ print(f"Дистанция в км: {distance}")
 
 message = "Дистанция больше 4 км" if distance > 4 else "Дистанция меньше 4 км"
 print(message)
+# Дистанция больше 4 км
 
