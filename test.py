@@ -5,6 +5,7 @@ TIME = 55
 def CaloriesCalc(h,w,s,t):
 	return 0.035 * w + ((s/t)**2 / h) * 0.029 * w
 
+
 def DistanceCalc(h,s):
 	return (((h/4 + 0.37) * s)/100)/1000
 
