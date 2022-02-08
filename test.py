@@ -1,6 +1,3 @@
-from turtle import distance
-
-
 HEIGHT = 183
 WEIGHT = 72
 STEPS = 15250
