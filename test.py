@@ -9,12 +9,8 @@ def calories_calc(h,w,s,t):
 def distance_calc(h,s):
 	return (((h/4 + 0.37) * s)/100)/1000
 
-<<<<<<< HEAD
 calories = calories_calc(HEIGHT,WEIGHT,STEPS,TIME)
 print(f"Калорий сожжено: {calories}")
-=======
-print(f"Калорий сожжено: {CaloriesCalc(HEIGHT,WEIGHT,STEPS,TIME)}")
->>>>>>> 4679c14a9ca424997dc63a7f7852aea8dbc34858
 # Калорий сожжено: 879.71
 
 distance = distance_calc(HEIGHT,STEPS)
