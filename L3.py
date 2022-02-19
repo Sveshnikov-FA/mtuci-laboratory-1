@@ -4,6 +4,7 @@ import logging
 
 
 class Calculator:
+    
     def __init__(self, limit):
         self.limit = limit
         self.records = []
@@ -62,6 +63,7 @@ class CashCalculator(Calculator):
 
 
 class Record:
+
     def __init__(self, amount=0, date=str(datetime.date.today()), comment=""):
         self.amount = amount
         self.date = date
