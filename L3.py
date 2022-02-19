@@ -15,7 +15,7 @@ class Calculator:
     def get_today_stats(self):
         total = 0
         for item in self.records:
-            if str(datetime.date.today()) == item.date:
+            if datetime.date.today() == item.date:
                 total += item.amount
             else:
                 break
@@ -26,7 +26,7 @@ class Calculator:
         total = 0
         for wd in range(7):
             for item in self.records:
-                if str((datetime.date.today() - datetime.timedelta(days=wd)).date()) == item.date:
+                if (datetime.date.today() - datetime.timedelta(days=wd)).date() == item.date:
                     total += item.amount
                 else:
                     break
@@ -59,26 +59,28 @@ class CashCalculator(Calculator):
         remaining = self.limit - self.get_today_stats()
         if remaining < 0:
             return 0
-        return round(remaining/curr_mapping[currency],2)
+        return round(remaining/curr_mapping[currency], 2)
 
 
 class Record:
 
-    def __init__(self, amount=0, date=str(datetime.date.today()), comment=""):
+    def __init__(self, amount=0, date=datetime.date.today(), comment=""):
         self.amount = amount
-        self.date = date
+        self.date = datetime.datetime.strptime("%Y-%m-%d").date() if type(date) is str else date
         self.comment = comment
 
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
+
     cash_calculator = CashCalculator(1000)
     cash_calculator.add_record(Record(amount=145, comment="123"))
     cash_calculator.add_record(Record(amount=145, comment="123"))
     cash_calculator.add_record(Record(amount=145, comment="2022-01-18"))
-    print(cash_calculator.get_today_cash_remained('RUB'))
+    logging.info(cash_calculator.get_today_cash_remained('RUB'))
 
     calorie_calculator = CaloriesCalculator(1000)
     calorie_calculator.add_record(Record(amount=145, comment="123"))
     calorie_calculator.add_record(Record(amount=999, comment="123"))
     calorie_calculator.add_record(Record(amount=145, comment="2022-01-18"))
-    logging.info(calorie_calculator.get_calories_remained())
+    calorie_calculator.get_calories_remained()
