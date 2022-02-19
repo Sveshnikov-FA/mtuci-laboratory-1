@@ -46,7 +46,7 @@ class Calculator:
         total = 0
         for wd in range(7):
             for item in self.records:
-                if (datetime.date.today() - datetime.timedelta(days=wd)).date() == item.date:
+                if datetime.date.today() - datetime.timedelta(days=wd) == item.date:
                     total += item.amount
                 else:
                     break
@@ -115,12 +115,27 @@ if __name__ == "__main__":
 
     cash_calculator = CashCalculator(1000)
     cash_calculator.add_record(Record(amount=145, comment="123"))
-    cash_calculator.add_record(Record(amount=145, comment="123"))
-    cash_calculator.add_record(Record(amount=145, comment="2022-01-18"))
     logging.info(cash_calculator.get_today_cash_remained('RUB'))
-
+    
     calorie_calculator = CaloriesCalculator(1000)
     calorie_calculator.add_record(Record(amount=145, comment="123"))
     calorie_calculator.add_record(Record(amount=999, comment="123"))
     calorie_calculator.add_record(Record(amount=145, comment="2022-01-18"))
     calorie_calculator.get_calories_remained()
+
+
+def test_day_calc():
+    cash_calculator = CashCalculator(1000)
+    cash_calculator.add_record(Record(amount=145, comment="123"))
+    result = cash_calculator.get_today_cash_remained('RUB')
+    assert result == 710.0
+
+
+def test_week_calc():
+    cal_calculator = CaloriesCalculator(1000)
+    cal_calculator.add_record(Record(amount=145, comment="123"))
+    cal_calculator.add_record(Record(amount=150, comment="123"))
+    cal_calculator.add_record(Record(amount=145, comment="2022-02-15"))
+    assert cal_calculator.get_week_stats() == 440
+    
+    
