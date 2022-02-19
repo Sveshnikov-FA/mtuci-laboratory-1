@@ -4,7 +4,7 @@ import logging
 
 
 class Calculator:
-    
+
     def __init__(self, limit):
         self.limit = limit
         self.records = []
@@ -40,7 +40,7 @@ class CaloriesCalculator(Calculator):
 
     def get_calories_remained(self):
         received = self.get_today_stats()
-        if received > self.limit:
+        if received < self.limit:
             logging.warning(f"Сегодня можно съесть что-нибудь ещё, но с общей калорийностью не более {self.limit - received} кКал")
         else:
             logging.info("Хватит есть!")
