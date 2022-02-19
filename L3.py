@@ -21,8 +21,7 @@ class Calculator:
 
     def get_week_stats(self):
         total = 0
-
-        for wd in range(0,7):
+        for wd in range(7):
             for item in self.records:
                 if str((datetime.date.today() - datetime.timedelta(days=wd)).date()) == item.date:
                     total += item.amount
@@ -55,8 +54,8 @@ class CashCalculator(Calculator):
             'USD': 70,
             'RUB': 1
         }
-        remaining = limit = self.get_today_stats()
-        if(remaining<0):
+        remaining = self.limit - self.get_today_stats()
+        if remaining < 0:
             return 0
         return remaining/curr_mapping[currency]
 
