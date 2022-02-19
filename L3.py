@@ -1,4 +1,6 @@
 import datetime
+import requests
+import logging
 
 
 class Calculator:
@@ -32,15 +34,15 @@ class Calculator:
 
 class CaloriesCalculator(Calculator):
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, limit):
+        super().__init__(limit)
 
     def get_calories_remained(self):
         received = self.get_today_stats()
         if received > self.limit:
-            print("Above limit")
+            logging.warning(f"Сегодня можно съесть что-нибудь ещё, но с общей калорийностью не более {self.limit - received} кКал")
         else:
-            print("Below limit")
+            logging.info("Хватит есть!")
 
 
 class CashCalculator(Calculator):
@@ -49,15 +51,14 @@ class CashCalculator(Calculator):
         super().__init__(limit)
 
     def get_today_cash_remained(self, currency):
-        curr_mapping = {
-            'EUR': 80,
-            'USD': 70,
-            'RUB': 1
-        }
+        curr_mapping = requests.get("http://api.exchangeratesapi.io/v1/latest?access_key=bf6cf289b53ad57e768c3cabc9630636").json()["rates"]
+        for i in curr_mapping:
+            curr_mapping[i] = round(curr_mapping[i]/curr_mapping["RUB"], 2)
+        logging.debug(curr_mapping)
         remaining = self.limit - self.get_today_stats()
         if remaining < 0:
             return 0
-        return remaining/curr_mapping[currency]
+        return round(remaining/curr_mapping[currency],2)
 
 
 class Record:
@@ -73,3 +74,9 @@ if __name__ == "__main__":
     cash_calculator.add_record(Record(amount=145, comment="123"))
     cash_calculator.add_record(Record(amount=145, comment="2022-01-18"))
     print(cash_calculator.get_today_cash_remained('RUB'))
+
+    calorie_calculator = CaloriesCalculator(1000)
+    calorie_calculator.add_record(Record(amount=145, comment="123"))
+    calorie_calculator.add_record(Record(amount=999, comment="123"))
+    calorie_calculator.add_record(Record(amount=145, comment="2022-01-18"))
+    logging.info(calorie_calculator.get_calories_remained())
